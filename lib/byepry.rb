@@ -4,8 +4,8 @@ require 'tempfile'
 require 'colorize'
 
 class Byepry
-  def execute
-    Find.find(ARGV.first) do |path|
+  def self.go
+    Find.find('.') do |path|
       next unless path =~ /.*\.rb$/
       file = File.open(path, 'r+')
       # Open a temporary file
