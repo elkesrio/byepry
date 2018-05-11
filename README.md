@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/byepry.svg)](https://badge.fury.io/rb/byepry)
+
 # byepry
 A simple ruby gem that delete all the lines that contain 'binding.pry'
 ## Introduction
