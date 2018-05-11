@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Othmane EL KESRI"]
   s.email       = 'elkesri.othmane@gmail.com'
   s.files       = ["lib/byepry.rb"]
+  s.executables << 'prybaby'
   s.homepage    =
     'http://rubygems.org/gems/byepry'
   s.license       = 'MIT'
