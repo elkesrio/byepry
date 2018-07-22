@@ -4,4 +4,4 @@ require 'fileutils'
 require 'tempfile'
 require 'byepry'
 
-Byepry.go
+Byepry.new(ARGV).go
