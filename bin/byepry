@@ -3,4 +3,5 @@
 require 'fileutils'
 require 'tempfile'
 require 'byepry'
-Byepry.call
+
+Byepry.go
