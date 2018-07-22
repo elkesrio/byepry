@@ -11,4 +11,6 @@ Gem::Specification.new do |s|
   s.homepage    =
     'http://rubygems.org/gems/byepry'
   s.license       = 'MIT'
+
+  s.add_dependency 'colorize', '~> 0.8.1'
 end
