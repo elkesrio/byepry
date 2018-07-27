@@ -4,6 +4,8 @@ require 'tempfile'
 require 'colorize'
 
 class Byepry
+  attr_reader :options
+
   def initialize(options = [])
     @options = options
   end
