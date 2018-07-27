@@ -15,4 +15,4 @@ Run `gem install byepry`
 3) Enjoy :D
 
 ## Options
-Use the `-i` to ignore the commented lines. (It will only remove the non commented lines that contains `binding.pry`)
+Use the `-i` option to ignore the commented lines. (It will only remove the non commented lines that contains `binding.pry`)
