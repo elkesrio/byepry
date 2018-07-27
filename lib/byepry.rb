@@ -15,7 +15,7 @@ class Byepry
       file = File.open(path, 'r+')
       # Open a temporary file
       tmp = Tempfile.new('extract')
-
+      puts file
       changed_file = remove_pry_from_file(file, tmp) unless @options
 
       tmp.close
@@ -29,12 +29,12 @@ class Byepry
     line_number = 0
 
     # Write good lines to temporary file
-    open(path, 'r').each do |l|
+    open(file, 'r').each do |l|
       line_number += 1
 
       if condition_to_remove? l
         changed_file = true
-        puts "Removed pry from File: #{path} Line: #{line_number}".green
+        puts "Removed pry from File: #{file.path} Line: #{line_number}".green
       else
         tmp << l
       end
@@ -45,8 +45,10 @@ class Byepry
 
   def condition_to_remove?(line)
     # Remove all 'binding.pry'
-    return line.include?('binding.pry') unless @options[0]
+    return line.include?('binding.pry') unless @options
     # Ignore commented lines
-    return line.include?('binding.pry') && !l.starts_with?('#') if @options[0] == '-i'
+    return line.include?('binding.pry') && !l.starts_with?('#') if @options == '-i'
   end
 end
+
+Byepry.new(ARGV).go
