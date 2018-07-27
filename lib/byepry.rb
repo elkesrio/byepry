@@ -4,7 +4,7 @@ require 'tempfile'
 require 'colorize'
 
 class Byepry
-  def initialize(options = nil)
+  def initialize(options = [])
     @options = options
   end
 
@@ -15,8 +15,7 @@ class Byepry
       file = File.open(path, 'r+')
       # Open a temporary file
       tmp = Tempfile.new('extract')
-      puts file
-      changed_file = remove_pry_from_file(file, tmp) unless @options
+      changed_file = remove_pry_from_file(file, tmp)
 
       tmp.close
       # Move temp file to origin if file changed
@@ -29,14 +28,14 @@ class Byepry
     line_number = 0
 
     # Write good lines to temporary file
-    open(file, 'r').each do |l|
+    file.each do |line|
       line_number += 1
 
-      if condition_to_remove? l
+      if condition_to_remove? line
         changed_file = true
         puts "Removed pry from File: #{file.path} Line: #{line_number}".green
       else
-        tmp << l
+        tmp << line
       end
     end
 
@@ -45,10 +44,8 @@ class Byepry
 
   def condition_to_remove?(line)
     # Remove all 'binding.pry'
-    return line.include?('binding.pry') unless @options
+    return line.include?('binding.pry') if @options.empty?
     # Ignore commented lines
-    return line.include?('binding.pry') && !l.starts_with?('#') if @options == '-i'
+    return line.include?('binding.pry') && !line.strip.start_with?('#') if @options[0] == '-i'
   end
 end
-
-Byepry.new(ARGV).go
