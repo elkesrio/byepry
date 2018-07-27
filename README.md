@@ -13,3 +13,6 @@ Run `gem install byepry`
 1) In your terminal, go to the root of your project.
 2) Run `byepry`
 3) Enjoy :D
+
+## Options
+Use the `-i` to ignore the commented `binding.pry`.
