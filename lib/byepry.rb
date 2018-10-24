@@ -3,13 +3,14 @@ require 'fileutils'
 require 'tempfile'
 require 'colorize'
 
+# Main class
 class Byepry
   def initialize(options = [])
     @options = options
   end
 
-  def go
-    Find.find('.') do |path|
+  def go(directoy_path)
+    Find.find(directoy_path) do |path|
       next unless path =~ /.*\.(rb|erb)$/
 
       file = File.open(path, 'r+')
@@ -25,14 +26,12 @@ class Byepry
 
   def remove_pry_from_file(file, tmp)
     changed_file = false
-    line_number = 0
 
-    # Write good lines to temporary file
-    file.each do |line|
-      line_number += 1
-
+    # Write valid lines to temporary file
+    file.each_with_index do |line, line_number|
       if condition_to_remove? line
         changed_file = true
+
         puts "Removed pry from File: #{file.path} Line: #{line_number}".green
       else
         tmp << line
@@ -43,9 +42,12 @@ class Byepry
   end
 
   def condition_to_remove?(line)
-    # Remove all 'binding.pry'
-    return line.include?('binding.pry') if @options.empty?
-    # Ignore commented lines
-    return line.include?('binding.pry') && !line.strip.start_with?('#') if @options[0] == '-i'
+    if @options.empty?
+      # Remove all 'binding.pry'
+      line.include?('binding.pry')
+    elsif @options[0] == '-i'
+      # Ignore commented lines
+      line.include?('binding.pry') && !line.strip.start_with?('#')
+    end
   end
 end
