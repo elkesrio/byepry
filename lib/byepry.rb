@@ -31,7 +31,12 @@ class Byepry
     file.each do |line|
       line_number += 1
 
-      if condition_to_remove? line
+      idx = remove_line_part(line)
+      if idx
+        changed_file = true
+        puts "Removed pry from File: #{file.path} Line: #{line_number} col: #{idx}".green
+        tmp << line[0...idx - 1] + "\n"
+      elsif condition_to_remove? line
         changed_file = true
         puts "Removed pry from File: #{file.path} Line: #{line_number}".green
       else
@@ -47,5 +52,9 @@ class Byepry
     return line.include?('binding.pry') if @options.empty?
     # Ignore commented lines
     return line.include?('binding.pry') && !line.strip.start_with?('#') if @options[0] == '-i'
+  end
+
+  def remove_line_part(line)
+    return line.index('rescue binding.pry')
   end
 end
